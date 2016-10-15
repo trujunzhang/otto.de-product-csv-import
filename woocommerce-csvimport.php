@@ -1,6 +1,6 @@
 <?php
 /*
-	Plugin Name:            otto.de products CSV Import
+	Plugin Name:            otto.de Products CSV Import
 	Plugin URI:             https://github.com/trujunzhang/otto.de-product-csv-import
 	Description:            Import and Export Woocommerce otto.de's products
 

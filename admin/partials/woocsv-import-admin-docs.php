@@ -7,7 +7,7 @@
 <div class="wrap">
 	<h2><?php echo __('Documentation','woocommerce-csvimport'); ?></h2>
 	<hr>
-	<h2><?php echo __('otto.de products CSV importer','woocommerce-csvimport'); ?></h2>
+	<h2><?php echo __('otto.de Products CSV importer','woocommerce-csvimport'); ?></h2>
 	<?php echo sprintf(__('Documentation is available in the %s knowledgebase %s. If you still have problems, feel free to drop me a mail at %s','woocommerce-csvimport'),'<a href="https://allaerd.org/knowledgebase">','</a>','<a href-"mailto:support@allaerd.org">support@allaerd.org</a>'); ?>	
 	<h3><?php echo __('Common questions','woocommerce-csvimport'); ?></h3>
 	<h4><?php echo __('Text is is cut during import or when i use special characters.','woocommerce-csvimport'); ?></h4>
