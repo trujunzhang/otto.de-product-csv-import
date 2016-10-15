@@ -34,7 +34,7 @@ class woocsv_import
         'woocsv_match_by'          => 'sku',
         'woocsv_roles'             => array ( 'shop_manager' ),
         'woocsv_match_author_by'   => 'login',
-        'woocsv_convert_to_utf8'   => 1,
+        'woocsv_convert_to_utf8'   => 0,
     );
 
     public $fields = array (
