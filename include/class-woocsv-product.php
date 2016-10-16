@@ -456,6 +456,9 @@ class woocsv_import_product
     {
         global $woocsv_import;
 
+        // sleep for 10 seconds
+//        sleep(60);
+
         $tmp = download_url($url, 10);
 
         if (is_wp_error($tmp)) {
