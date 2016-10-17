@@ -74,14 +74,6 @@ class woocsv_import_admin
 		}
 	}
 	
-	public function docs () {
-		include dirname( __FILE__ ) . '/partials/woocsv-import-admin-docs.php';
-	}	
-	
-	public function addons () {
-		include dirname( __FILE__ ) . '/partials/woocsv-import-admin-addons.php';
-	}
-	
 	public function import () {
 		global $woocsv_import;
 		
