@@ -70,6 +70,7 @@ class woocsv_import
         31 => 'menu_order',
         32 => 'post_author',     //user name or nice name of an user
         33 => 'post_date',
+        34 => 'variations',
     );
 
 

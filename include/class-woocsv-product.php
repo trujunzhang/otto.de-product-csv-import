@@ -34,6 +34,8 @@ class woocsv_import_product
 
     public $product_type = 'variable';
 
+    public $variations = '';
+
 
     /* since 3.0.6
         no more use of the global $woocsv_import
@@ -691,6 +693,11 @@ class woocsv_import_product
         if (in_array('featured_image', $this->header)) {
             $key = array_search('featured_image', $this->header);
             $this->featured_image = $this->raw_data[$key];
+        }
+
+        if (in_array('variations', $this->header)) {
+            $key = array_search('variations', $this->header);
+            $this->variations = $this->raw_data[$key];
         }
 
         //check if there is a product gallery
