@@ -275,6 +275,7 @@ class woocsv_import_product
 
         do_action('woocsv_product_after_body_save');
 
+        // TODO: DJZHANG(Save the product type)
         //save the product type
         wp_set_object_terms($post_id, $this->product_type, 'product_type', FALSE);
 
