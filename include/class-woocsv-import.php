@@ -338,7 +338,7 @@ class woocsv_import
             $parent_post_id = $this->importParentProduct($header, $line);
 
             // Step2: import variations size and color as child products
-            $variations = "";
+            $variations = $woocsv_product->variations;
             $this->importChildProduct($parent_post_id, $variations, $header);
 
             //goto the next row

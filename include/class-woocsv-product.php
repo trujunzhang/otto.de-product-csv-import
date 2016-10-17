@@ -698,6 +698,9 @@ class woocsv_import_product
         if (in_array('variations', $this->header)) {
             $key = array_search('variations', $this->header);
             $this->variations = $this->raw_data[$key];
+
+            $developer_data = json_decode($this->variations);
+
         }
 
         //check if there is a product gallery
