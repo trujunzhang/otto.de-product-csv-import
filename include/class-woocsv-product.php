@@ -32,7 +32,7 @@ class woocsv_import_product
 
     public $product_gallery = '';
 
-    public $product_type = 'simple';
+    public $product_type = 'variable';
 
 
     /* since 3.0.6
