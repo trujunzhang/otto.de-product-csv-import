@@ -70,21 +70,6 @@ include dirname(__FILE__) . '/include/class-woocsv-schedule-import.php';
 include dirname(__FILE__) . '/include/LoggerInterface.php';
 include dirname(__FILE__) . '/include/LogToFile.php';
 
-//exporter
-include dirname(__FILE__) . '/export/interfaces/productsInterface.php';
-include dirname(__FILE__) . '/export/interfaces/exportInterface.php';
-include dirname(__FILE__) . '/export/interfaces/writerInterface.php';
-include dirname(__FILE__) . '/export/include/woocsvExport.php';
-include dirname(__FILE__) . '/export/include/woocsvExportAdmin.php';
-include dirname(__FILE__) . '/export/include/woocsvExportProduct.php';
-include dirname(__FILE__) . '/export/include/ajaxExport.php';
-include dirname(__FILE__) . '/export/include/csvWriter.php';
-include dirname(__FILE__) . '/export/include/woocsvAttributes.php';
-include dirname(__FILE__) . '/export/products/simple.php';
-include dirname(__FILE__) . '/export/products/variable.php';
-include dirname(__FILE__) . '/export/products/variation.php';
-include dirname(__FILE__) . '/export/exporter.php';
-
 /**
  * ajax actions
  */
