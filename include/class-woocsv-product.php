@@ -59,11 +59,12 @@ class woocsv_import_product
     );
 
     public $product = array(
+        'is_parent' => false,
         'product_id' => '',
         'variable_id' => '',
         'product_type' => '',
         'product_parent' => '',
-        'attributes' => '',
+        'attributes' => array(),
         'available_attributes' => array(),
     );
 

@@ -77,6 +77,7 @@ class woocsv_import
         37 => 'product_parent',
         38 => 'attributes',
         39 => 'available_attributes',
+        40 => 'is_parent',
     );
 
 
