@@ -259,7 +259,7 @@ class woocsv_import
     public function run_import()
     {
         global $woocsv_product;
-        global $current_product_id;
+        global $last_product_id;
 
         /**
          * Are we starting for the first time, than create a batch and continue, else just pick uo the batch code and start where you left
@@ -341,12 +341,32 @@ class woocsv_import
             //reset time ever time around
             @set_time_limit(0);
             //new one and fill in the header and the raw data
+            $woocsv_product = new woocsv_import_product ($this->logger);
 
-            // Step1: import parent product
-            $parent_post_id = $this->importParentProduct($header, $line);
+            $woocsv_product->header = $header;
+            $woocsv_product->raw_data = $line;
 
-            // Step2: import variations size and color as child products
-//            $this->importChildProduct($parent_post_id, $variations, $header);
+            //fill it, parse it and save it
+            $woocsv_product->fill_in_data();
+
+            $this->logger->log(__('-----> Row', 'woocommerce-csvimport'));
+
+            $woocsv_product->parse_data();
+
+            $post_id = $woocsv_product->save();
+
+            if ($woocsv_product->log) {
+                $this->logger->log(__($woocsv_product->log, 'woocommerce-csvimport'));
+            }
+
+            //write tot log if debug is on
+            if ($this->get_debug() == 0) {
+                $this->logger->log(__('--->debug dump', 'woocommerce-csvimport'));
+                $this->logger->log(__($woocsv_product, 'woocommerce-csvimport'));
+            }
+            //close log
+
+            $this->logger->log(__('-----> end row', 'woocommerce-csvimport'));
 
             //goto the next row
             $batch['row']++;
@@ -381,83 +401,6 @@ class woocsv_import
         }
 
         $this->die_nicer($batch_code, $batch);
-    }
-
-    public function importParentProduct($header, $line)
-    {
-
-        $woocsv_product = new woocsv_import_product ($this->logger);
-
-        $woocsv_product->header = $header;
-        $woocsv_product->raw_data = $line;
-
-        //fill it, parse it and save it
-        $woocsv_product->fill_in_data();
-
-        $this->logger->log(__('-----> Row', 'woocommerce-csvimport'));
-
-        $woocsv_product->parse_data();
-
-//        $post_id = $woocsv_product->save();
-        if ($woocsv_product->log) {
-            $this->logger->log(__($woocsv_product->log, 'woocommerce-csvimport'));
-        }
-
-        //write tot log if debug is on
-        if ($this->get_debug() == 0) {
-            $this->logger->log(__('--->debug dump', 'woocommerce-csvimport'));
-            $this->logger->log(__($woocsv_product, 'woocommerce-csvimport'));
-        }
-        //close log
-
-        $this->logger->log(__('-----> end row', 'woocommerce-csvimport'));
-
-        return $post_id;
-    }
-
-    public function importChildProduct($parent_post_id, $variations, $header)
-    {
-        foreach ($variations as $line) {
-
-            //reset time ever time around
-            @set_time_limit(0);
-            //new one and fill in the header and the raw data
-
-            $woocsv_product = new woocsv_import_product ($this->logger);
-
-            $woocsv_product->header = $header;
-            $woocsv_product->raw_data = $line;
-
-            //fill it, parse it and save it
-            $woocsv_product->fill_in_data();
-
-            $this->logger->log(__('-----> Row', 'woocommerce-csvimport'));
-
-            $woocsv_product->parse_data();
-
-            $woocsv_product->save();
-            if ($woocsv_product->log) {
-                $this->logger->log(__($woocsv_product->log, 'woocommerce-csvimport'));
-            }
-
-
-            //write tot log if debug is on
-            if ($this->get_debug() == 0) {
-                $this->logger->log(__('--->debug dump', 'woocommerce-csvimport'));
-                $this->logger->log(__($woocsv_product, 'woocommerce-csvimport'));
-            }
-            //close log
-
-            $this->logger->log(__('-----> end row', 'woocommerce-csvimport'));
-
-            //goto the next row
-            $batch['row']++;
-
-            //delete transionts
-            if (function_exists('wc_delete_product_transients')) {
-                wc_delete_product_transients($woocsv_product->body['ID']);
-            }
-        }
     }
 
     public function die_nicer($batch_code, $batch)
