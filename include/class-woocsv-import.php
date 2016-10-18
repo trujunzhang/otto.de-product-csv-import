@@ -259,7 +259,7 @@ class woocsv_import
     public function run_import()
     {
         global $woocsv_product;
-        global $last_product_id;
+        global $parent_post_id;
 
         /**
          * Are we starting for the first time, than create a batch and continue, else just pick uo the batch code and start where you left
@@ -353,7 +353,9 @@ class woocsv_import
 
             $woocsv_product->parse_data();
 
-            $post_id = $woocsv_product->save();
+            // Step1: import parent product
+            $post_id = $woocsv_product->save($parent_post_id);
+            // Step2: import variations size and color as child products
 
             if ($woocsv_product->log) {
                 $this->logger->log(__($woocsv_product->log, 'woocommerce-csvimport'));

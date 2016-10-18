@@ -247,7 +247,7 @@ class woocsv_import_product
         return -1;
     }
 
-    public function save()
+    public function save($parent_post_id)
     {
 
         // @since 3.0.2 if skip is true, skip the product during import
@@ -262,8 +262,18 @@ class woocsv_import_product
             $this->body['tax_input'] = array('product_tag' => explode('|', $this->tags));
         }
 
-        // update product if exist.
-        $post_id = $this->update_exist_post_by_title($this->body);
+        $post_id = -1;
+
+        // only update parent product if exist.
+        if ($this->product["is_parent"]) {
+            $post_id = $this->update_exist_post_by_title($this->body);
+        } else {
+            // TODO: DJZHANG(set vairation's body)
+            $this->body["post_parent"] = $parent_post_id;
+            $this->body["post_type"] = "product_variation";
+            $this->body["post_title"] = sprintf("Product %d Variation", $parent_post_id);
+            $this->body["post_name"] = sprintf("Product %d Variation-%d", $parent_post_id);
+        }
 
         //save the post if not exist.
         if ($post_id === -1) {
@@ -305,14 +315,14 @@ class woocsv_import_product
         do_action('woocsv_product_before_images_save');
 
         if (!empty($this->featured_image)) {
-            $this->save_featured_image();
+//            $this->save_featured_image();
         } else {
             $this->logger->log(__('No featured image available ', 'woocommerce-csvimport'));
         }
 
         //save the product gallery
         if (!empty($this->product_gallery)) {
-            $this->save_product_gallery();
+//            $this->save_product_gallery();
         }
 
         do_action('woocsv_product_before_shipping_save');
