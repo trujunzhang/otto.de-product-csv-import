@@ -644,6 +644,14 @@ class woocsv_import_product
             }
         }
 
+        //fill in the product data
+        foreach ($this->product as $key => $value) {
+            if (in_array($key, $this->header)) {
+                $product_value = $this->raw_data[array_search($key, $this->header)];
+                $this->product[$key] = $product_value;
+            }
+        }
+
         // @ since 3.0.5
         // if the product is new add total_sales to show it in the front end
         // some themes needed total_sales for popularity sorting
