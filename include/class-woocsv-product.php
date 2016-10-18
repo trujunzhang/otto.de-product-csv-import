@@ -386,7 +386,7 @@ class woocsv_import_product
                 'position' => sprintf("%d", $step),
                 'is_visible' => 1,
                 'is_variation' => 1,
-                'is_taxonomy' => 1
+                'is_taxonomy' => 0
 
             );
             $step += 1;
