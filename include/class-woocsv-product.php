@@ -352,27 +352,15 @@ class woocsv_import_product
     {
         wp_set_object_terms($post_id, $this->product_type, 'product_type', FALSE);
 
-//        $this->insert_product_attributes($post_id)
+        $this->insert_product_attributes($post_id);
     }
 
-    function insert_product_attributes ($post_id, $available_attributes, $variations)
+    function insert_product_attributes($post_id)
     {
-        foreach ($available_attributes as $attribute) // Go through each attribute
-        {
-            $values = array(); // Set up an array to store the current attributes values.
-
-            foreach ($variations as $variation) // Loop each variation in the file
-            {
-                $attribute_keys = array_keys($variation['attributes']); // Get the keys for the current variations attributes
-
-                foreach ($attribute_keys as $key) // Loop through each key
-                {
-                    if ($key === $attribute) // If this attributes key is the top level attribute add the value to the $values array
-                    {
-                        $values[] = $variation['attributes'][$key];
-                    }
-                }
-            }
+        $available_attributes = $this->product["available_attributes"];
+        foreach ($available_attributes as $key => $val) {
+            $attribute = $key;
+            $values = preg_split('/[\s|]+/', $val);
 
             // Essentially we want to end up with something like this for each attribute:
             // $values would contain: array('small', 'medium', 'medium', 'large');
@@ -388,13 +376,13 @@ class woocsv_import_product
 
         foreach ($available_attributes as $attribute) // Loop round each attribute
         {
-            $product_attributes_data['pa_'.$attribute] = array( // Set this attributes array to a key to using the prefix 'pa'
+            $product_attributes_data['pa_' . $attribute] = array( // Set this attributes array to a key to using the prefix 'pa'
 
-                'name'         => 'pa_'.$attribute,
-                'value'        => '',
-                'is_visible'   => '1',
+                'name' => 'pa_' . $attribute,
+                'value' => '',
+                'is_visible' => '1',
                 'is_variation' => '1',
-                'is_taxonomy'  => '1'
+                'is_taxonomy' => '1'
 
             );
         }
@@ -725,8 +713,9 @@ class woocsv_import_product
             $this->product['attributes'] = $attributes_json;
         }
 
-        if (!empty ($this->product['available_attributes'])) {
-            $this->product["available_attributes"] = preg_split('/[\s,]+/', $this->product["available_attributes"]);
+        if (!empty ($this->product['available_attributes'])) { //json_decode($this->product["available_attributes"], true)["color"]
+            $available_attributes_json = json_decode($this->product["available_attributes"], true);
+            $this->product["available_attributes"] = $available_attributes_json;
         }
 
         // @ since 3.0.5
