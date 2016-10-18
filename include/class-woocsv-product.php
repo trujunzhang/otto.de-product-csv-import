@@ -295,9 +295,11 @@ class woocsv_import_product
 
         do_action('woocsv_product_after_body_save');
 
-        // TODO: DJZHANG(Save the product type)
+        // TODO: DJZHANG(Save the product type,from 'simple' to 'variable')
         //save the product type
-        wp_set_object_terms($post_id, $this->product_type, 'product_type', FALSE);
+        if ($this->product["is_parent"]) {// Only for parent product.
+            wp_set_object_terms($post_id, $this->product_type, 'product_type', FALSE);
+        }
 
         do_action('woocsv_product_before_meta_save');
 
