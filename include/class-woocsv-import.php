@@ -24,6 +24,8 @@ class woocsv_import
 
     public $version = '3.1.3';
 
+    public $parent_post_id;
+
     public $options_default = array(
         'woocsv_separator' => ',',
         'woocsv_skip_first_line' => 1,
@@ -259,7 +261,6 @@ class woocsv_import
     public function run_import()
     {
         global $woocsv_product;
-        global $parent_post_id;
 
         /**
          * Are we starting for the first time, than create a batch and continue, else just pick uo the batch code and start where you left
@@ -353,9 +354,9 @@ class woocsv_import
 
             $woocsv_product->parse_data();
 
-            $post_id = $woocsv_product->save($parent_post_id);
+            $post_id = $woocsv_product->save($this->parent_post_id);
             if ($woocsv_product->is_parent_product()) {
-                $parent_post_id = $post_id;
+                $this->parent_post_id = $post_id;
             }
 
             if ($woocsv_product->log) {
