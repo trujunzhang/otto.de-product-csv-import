@@ -34,6 +34,8 @@ class woocsv_import_product
 
     public $product_type = 'variable';
 
+    public $is_product_parent = FALSE;
+
     /* since 3.0.6
         no more use of the global $woocsv_import
     */
@@ -247,8 +249,9 @@ class woocsv_import_product
         return -1;
     }
 
-    public function is_parent_product(){
-        return $this->product["is_parent"];
+    public function is_parent_product()
+    {
+        return $this->is_product_parent;
     }
 
     public function save($parent_post_id)
@@ -269,7 +272,7 @@ class woocsv_import_product
         $post_id = -1;
 
         // only update parent product if exist.
-        if ($this->product["is_parent"]) {
+        if ($this->is_product_parent) {
             $post_id = $this->update_exist_post_by_title($this->body);
         } else {
             // TODO: DJZHANG(set vairation's body)
@@ -301,11 +304,11 @@ class woocsv_import_product
 
         // TODO: DJZHANG(Save the product type,from 'simple' to 'variable')
         //save the product type
-        if ($this->product["is_parent"]) {// Only for parent product.
+        if ($this->is_product_parent) {// Only for parent product.
             wp_set_object_terms($post_id, $this->product_type, 'product_type', FALSE);
             $this->insert_product_attributes($post_id);
         } else {
-
+            $this->insert_product_variations($post_id);
         }
 
         do_action('woocsv_product_before_meta_save');
@@ -408,9 +411,9 @@ class woocsv_import_product
         $attributes = $this->product["attributes"];
         foreach ($attributes as $attribute => $value) // Loop through the variations attributes
         {
-            $attribute_term = get_term_by('name', $value, $attribute); // We need to insert the slug not the name into the variation post meta
+//            $attribute_term = get_term_by('name', $value, $attribute); // We need to insert the slug not the name into the variation post meta
 
-            update_post_meta($variation_post_id, 'attribute_pa_' . $attribute, $attribute_term->slug);
+            update_post_meta($variation_post_id, 'attribute_' . $attribute, $value);
             // Again without variables: update_post_meta(25, 'attribute_pa_size', 'small')
         }
 
@@ -744,6 +747,10 @@ class woocsv_import_product
         if (!empty ($this->product['available_attributes'])) { //json_decode($this->product["available_attributes"], true)["color"]
             $available_attributes_json = json_decode($this->product["available_attributes"], true);
             $this->product["available_attributes"] = $available_attributes_json;
+        }
+
+        if (!empty ($this->product['is_parent'])) {
+            $this->is_product_parent = ($this->product['is_parent'] == "True");
         }
 
         // @ since 3.0.5
