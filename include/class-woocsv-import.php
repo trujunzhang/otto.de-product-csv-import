@@ -24,7 +24,6 @@ class woocsv_import
 
     public $version = '3.1.3';
 
-    public $parent_post_id;
 
     public $options_default = array(
         'woocsv_separator' => ',',
@@ -354,10 +353,7 @@ class woocsv_import
 
             $woocsv_product->parse_data();
 
-            $post_id = $woocsv_product->save($this->parent_post_id);
-            if ($woocsv_product->is_parent_product()) {
-                $this->parent_post_id = $post_id;
-            }
+            $post_id = $woocsv_product->save();
 
             if ($woocsv_product->log) {
                 $this->logger->log(__($woocsv_product->log, 'woocommerce-csvimport'));

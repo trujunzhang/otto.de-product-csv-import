@@ -254,7 +254,7 @@ class woocsv_import_product
         return $this->is_product_parent;
     }
 
-    public function save($parent_post_id)
+    public function save()
     {
 
         // @since 3.0.2 if skip is true, skip the product during import
@@ -269,13 +269,13 @@ class woocsv_import_product
             $this->body['tax_input'] = array('product_tag' => explode('|', $this->tags));
         }
 
-        $post_id = -1;
-
         // only update parent product if exist.
         if ($this->is_product_parent) {
-            $post_id = $this->update_exist_post_by_title($this->body);
         } else {
             // TODO: DJZHANG(set vairation's body)
+            // The parent's sku recorded as the variable product's product_id.
+            $sku = $this->product["product_id"];
+            $parent_post_id = $this->get_product_by_id($sku);
             $variable_index = $this->product["variable_index"];
             $this->body["post_parent"] = $parent_post_id;
             $this->body["post_type"] = "product_variation";
@@ -283,9 +283,10 @@ class woocsv_import_product
             $this->body["post_name"] = sprintf("Product %d Variation-%d", $parent_post_id, $variable_index);
         }
 
-        //save the post if not exist.
-        if ($post_id === -1) {
+        if ($this->new) {
             $post_id = wp_insert_post($this->body, TRUE);
+        } else {
+            $post_id = $this->update_exist_post_by_title($this->body);
         }
 
         if (is_wp_error($post_id)) {
