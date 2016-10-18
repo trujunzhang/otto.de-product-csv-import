@@ -354,6 +354,9 @@ class woocsv_import
             $woocsv_product->parse_data();
 
             $post_id = $woocsv_product->save($parent_post_id);
+            if ($woocsv_product->is_parent_product()) {
+                $parent_post_id = $post_id;
+            }
 
             if ($woocsv_product->log) {
                 $this->logger->log(__($woocsv_product->log, 'woocommerce-csvimport'));

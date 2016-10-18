@@ -247,6 +247,10 @@ class woocsv_import_product
         return -1;
     }
 
+    public function is_parent_product(){
+        return $this->product["is_parent"];
+    }
+
     public function save($parent_post_id)
     {
 
@@ -298,7 +302,10 @@ class woocsv_import_product
         // TODO: DJZHANG(Save the product type,from 'simple' to 'variable')
         //save the product type
         if ($this->product["is_parent"]) {// Only for parent product.
-            $this->save_variable_product_attributes($post_id);
+            wp_set_object_terms($post_id, $this->product_type, 'product_type', FALSE);
+            $this->insert_product_attributes($post_id);
+        } else {
+
         }
 
         do_action('woocsv_product_before_meta_save');
@@ -348,13 +355,10 @@ class woocsv_import_product
         return $post_id;
     }
 
-    public function save_variable_product_attributes($post_id)
-    {
-        wp_set_object_terms($post_id, $this->product_type, 'product_type', FALSE);
-
-        $this->insert_product_attributes($post_id);
-    }
-
+    /**
+     * Set parent product's attributes,like 'color','size'
+     * @param $post_id
+     */
     function insert_product_attributes($post_id)
     {
         $available_attributes = $this->product["available_attributes"];
@@ -393,6 +397,25 @@ class woocsv_import_product
         }
 
         update_post_meta($post_id, '_product_attributes', $product_attributes_data); // Attach the above array to the new posts meta data key '_product_attributes'
+    }
+
+    /**
+     * Update variable product's meta
+     * @param $variation_post_id
+     */
+    function insert_product_variations($variation_post_id)
+    {
+        $attributes = $this->product["attributes"];
+        foreach ($attributes as $attribute => $value) // Loop through the variations attributes
+        {
+            $attribute_term = get_term_by('name', $value, $attribute); // We need to insert the slug not the name into the variation post meta
+
+            update_post_meta($variation_post_id, 'attribute_pa_' . $attribute, $attribute_term->slug);
+            // Again without variables: update_post_meta(25, 'attribute_pa_size', 'small')
+        }
+
+//        update_post_meta($variation_post_id, '_price', $variation['price']);
+//        update_post_meta($variation_post_id, '_regular_price', $variation['price']);
     }
 
     public function save_tags($post_id)
