@@ -652,6 +652,15 @@ class woocsv_import_product
             }
         }
 
+        if (!empty ($this->product['attributes'])) {
+            $attributes_json = json_decode($this->product["attributes"], true);
+            $this->product['attributes'] = $attributes_json;
+        }
+
+        if (!empty ($this->product['available_attributes'])) {
+            $this->product["available_attributes"] = preg_split('/[\s,]+/', $this->product["available_attributes"]);
+        }
+
         // @ since 3.0.5
         // if the product is new add total_sales to show it in the front end
         // some themes needed total_sales for popularity sorting
