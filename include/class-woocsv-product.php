@@ -369,7 +369,7 @@ class woocsv_import_product
 
             // Store the values to the attribute on the new post, for example without variables:
             // wp_set_object_terms(23, array('small', 'medium', 'large'), 'pa_size');
-            wp_set_object_terms($post_id, $values, 'pa_' . $attribute);
+            wp_set_object_terms($post_id, $values, $attribute);
         }
 
         $product_attributes_data = array(); // Setup array to hold our product attributes data
@@ -379,9 +379,9 @@ class woocsv_import_product
         {
             $attribute = $key;
             $values = $val;
-            $product_attributes_data['pa_' . $attribute] = array( // Set this attributes array to a key to using the prefix 'pa'
+            $product_attributes_data[$attribute] = array( // Set this attributes array to a key to using the prefix 'pa'
 
-                'name' => 'pa_' . $attribute,
+                'name' => $attribute,
                 'value' => $values,
                 'position' => sprintf("%d", $step),
                 'is_visible' => 1,
