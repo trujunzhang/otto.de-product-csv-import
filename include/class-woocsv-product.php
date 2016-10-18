@@ -374,18 +374,22 @@ class woocsv_import_product
 
         $product_attributes_data = array(); // Setup array to hold our product attributes data
 
+        $step = 0;
         foreach ($available_attributes as $key => $val) // Loop round each attribute, like 'color','size'
         {
             $attribute = $key;
+            $values = $val;
             $product_attributes_data['pa_' . $attribute] = array( // Set this attributes array to a key to using the prefix 'pa'
 
                 'name' => 'pa_' . $attribute,
-                'value' => '',
-                'is_visible' => '1',
-                'is_variation' => '1',
-                'is_taxonomy' => '1'
+                'value' => $values,
+                'position' => sprintf("%d", $step),
+                'is_visible' => 1,
+                'is_variation' => 1,
+                'is_taxonomy' => 1
 
             );
+            $step += 1;
         }
 
         update_post_meta($post_id, '_product_attributes', $product_attributes_data); // Attach the above array to the new posts meta data key '_product_attributes'
