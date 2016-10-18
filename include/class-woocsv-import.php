@@ -353,9 +353,7 @@ class woocsv_import
 
             $woocsv_product->parse_data();
 
-            // Step1: import parent product
-//            $post_id = $woocsv_product->save($parent_post_id);
-            // Step2: import variations size and color as child products
+            $post_id = $woocsv_product->save($parent_post_id);
 
             if ($woocsv_product->log) {
                 $this->logger->log(__($woocsv_product->log, 'woocommerce-csvimport'));

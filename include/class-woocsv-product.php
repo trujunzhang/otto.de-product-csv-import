@@ -374,8 +374,9 @@ class woocsv_import_product
 
         $product_attributes_data = array(); // Setup array to hold our product attributes data
 
-        foreach ($available_attributes as $attribute) // Loop round each attribute
+        foreach ($available_attributes as $key => $val) // Loop round each attribute, like 'color','size'
         {
+            $attribute = $key;
             $product_attributes_data['pa_' . $attribute] = array( // Set this attributes array to a key to using the prefix 'pa'
 
                 'name' => 'pa_' . $attribute,
