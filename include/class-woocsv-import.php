@@ -70,6 +70,13 @@ class woocsv_import
         31 => 'menu_order',
         32 => 'post_author',     //user name or nice name of an user
         33 => 'post_date',
+        // for product
+        34 => 'product_id',
+        35 => 'variable_id',
+        36 => 'product_type',
+        37 => 'product_parent',
+        38 => 'attributes',
+        39 => 'available_attributes',
     );
 
 
@@ -251,6 +258,7 @@ class woocsv_import
     public function run_import()
     {
         global $woocsv_product;
+        global $current_product_id;
 
         /**
          * Are we starting for the first time, than create a batch and continue, else just pick uo the batch code and start where you left
@@ -389,7 +397,7 @@ class woocsv_import
 
         $woocsv_product->parse_data();
 
-        $post_id = $woocsv_product->save();
+//        $post_id = $woocsv_product->save();
         if ($woocsv_product->log) {
             $this->logger->log(__($woocsv_product->log, 'woocommerce-csvimport'));
         }

@@ -58,6 +58,15 @@ class woocsv_import_product
         'post_author' => '',
     );
 
+    public $product = array(
+        'product_id' => '',
+        'variable_id' => '',
+        'product_type' => '',
+        'product_parent' => '',
+        'attributes' => '',
+        'available_attributes' => array(),
+    );
+
     public $meta = array(
         '_sku' => '',
         '_downloadable' => 'no',
