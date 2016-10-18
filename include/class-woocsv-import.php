@@ -73,7 +73,7 @@ class woocsv_import
         // for product
         34 => 'product_id',
         35 => 'variable_id',
-        36 => 'product_type',
+        36 => 'variable_index',
         37 => 'product_parent',
         38 => 'attributes',
         39 => 'available_attributes',

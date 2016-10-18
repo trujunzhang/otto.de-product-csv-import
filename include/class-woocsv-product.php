@@ -62,8 +62,8 @@ class woocsv_import_product
         'is_parent' => false,
         'product_id' => '',
         'variable_id' => '',
-        'product_type' => '',
         'product_parent' => '',
+        'variable_index' => -1,
         'attributes' => array(),
         'available_attributes' => array(),
     );
@@ -269,10 +269,11 @@ class woocsv_import_product
             $post_id = $this->update_exist_post_by_title($this->body);
         } else {
             // TODO: DJZHANG(set vairation's body)
+            $variable_index = $this->product["variable_index"];
             $this->body["post_parent"] = $parent_post_id;
             $this->body["post_type"] = "product_variation";
             $this->body["post_title"] = sprintf("Product %d Variation", $parent_post_id);
-            $this->body["post_name"] = sprintf("Product %d Variation-%d", $parent_post_id);
+            $this->body["post_name"] = sprintf("Product %d Variation-%d", $parent_post_id, $variable_index);
         }
 
         //save the post if not exist.
