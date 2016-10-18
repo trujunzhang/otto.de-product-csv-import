@@ -70,7 +70,6 @@ class woocsv_import
         31 => 'menu_order',
         32 => 'post_author',     //user name or nice name of an user
         33 => 'post_date',
-        34 => 'variations',
     );
 
 
@@ -338,8 +337,7 @@ class woocsv_import
             $parent_post_id = $this->importParentProduct($header, $line);
 
             // Step2: import variations size and color as child products
-            $variations = $woocsv_product->variations;
-            $this->importChildProduct($parent_post_id, $variations, $header);
+//            $this->importChildProduct($parent_post_id, $variations, $header);
 
             //goto the next row
             $batch['row']++;
@@ -500,7 +498,7 @@ class woocsv_import
         $row = 0;
         $lines = array();
         $handle = fopen($filename, "r");
-
+        // TODO: djzhang(fgetcsv)
         while (($line = fgetcsv($handle, 0, $seperator)) !== FALSE) {
 
             if ($row >= $from && $row <= $till) {
