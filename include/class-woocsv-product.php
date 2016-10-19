@@ -70,6 +70,7 @@ class woocsv_import_product
         'variable_index' => -1,
         'attributes' => array(),
         'available_attributes' => array(),
+        'default_variable' => '',
     );
 
     public $meta = array(
@@ -331,7 +332,7 @@ class woocsv_import_product
         do_action('woocsv_product_before_images_save');
 
         if (!empty($this->featured_image)) {
-            $this->save_featured_image();
+//            $this->save_featured_image();
         } else {
             $this->logger->log(__('No featured image available ', 'woocommerce-csvimport'));
         }
@@ -418,6 +419,15 @@ class woocsv_import_product
 
             update_post_meta($variation_post_id, 'attribute_' . $attribute, $value);
             // Again without variables: update_post_meta(25, 'attribute_pa_size', 'small')
+        }
+
+
+        if ($this->is_default_variable) {
+            $sku = $this->product["product_id"];
+            $parent_post_id = $this->get_product_by_id($sku);
+
+            $product_default_attribute = $attributes;
+            update_post_meta($parent_post_id, '_default_attributes', $product_default_attribute);
         }
 
 //        update_post_meta($variation_post_id, '_price', $variation['price']);
@@ -756,8 +766,8 @@ class woocsv_import_product
             $this->is_product_parent = ($this->product['is_parent'] == "True");
         }
 
-        if (!empty ($this->product['is_default_variable'])) {
-            $this->is_default_variable = ($this->product['is_default_variable'] == "True");
+        if (!empty ($this->product['default_variable'])) {
+            $this->is_default_variable = ($this->product['default_variable'] == "True");
         }
 
 
