@@ -35,8 +35,8 @@ class woocsv_import_settings {
 		register_setting( 'woocsv-settings', 'woocsv_blocksize', array($this,'options_validate') );
 		
 		//merge_products
-		add_settings_field('woocsv_merge_products', __('Merge products','woocommerce-csvimport'), array($this,'merge_products'), 'woocsv-settings','woocsv-settings');	
-		register_setting( 'woocsv-settings', 'woocsv_merge_products', array($this,'options_validate') );
+//		add_settings_field('woocsv_merge_products', __('Merge products','woocommerce-csvimport'), array($this,'merge_products'), 'woocsv-settings','woocsv-settings');
+//		register_setting( 'woocsv-settings', 'woocsv_merge_products', array($this,'options_validate') );
 		
 		//debug
 		add_settings_field('woocsv_debug', __('Debug','woocommerce-csvimport'), array($this,'debug'), 'woocsv-settings','woocsv-settings');
