@@ -436,7 +436,9 @@ class woocsv_import
 
     public function get_debug()
     {
-        return get_option('woocsv_debug');
+//        return get_option('woocsv_debug');
+        // TODO: djzhang
+        return 1;
     }
 
     public function get_skip_first_line()
