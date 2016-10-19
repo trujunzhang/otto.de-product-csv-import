@@ -763,11 +763,11 @@ class woocsv_import_product
         }
 
         if (!empty ($this->product['is_parent'])) {
-            $this->is_product_parent = ($this->product['is_parent'] == "True");
+            $this->is_product_parent = filter_var($this->product['is_parent'], FILTER_VALIDATE_BOOLEAN);
         }
 
         if (!empty ($this->product['default_variable'])) {
-            $this->is_default_variable = ($this->product['default_variable'] == "True");
+            $this->is_default_variable = filter_var($this->product['default_variable'], FILTER_VALIDATE_BOOLEAN);
         }
 
 
