@@ -353,7 +353,7 @@ class woocsv_import
 
             $woocsv_product->parse_data();
 
-            $post_id = $woocsv_product->save();
+            $woocsv_product->save();
 
             if ($woocsv_product->log) {
                 $this->logger->log(__($woocsv_product->log, 'woocommerce-csvimport'));
