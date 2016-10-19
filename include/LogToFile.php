@@ -36,17 +36,16 @@ class LogToFile implements Logger
      */
     public function log($data)
     {
-        // TODO: djzhang
-//        $fp = fopen($this->filename, 'a');
-//        if (is_array($data) || is_object($data)) {
-//            $this->writeArray($data, $fp);
-//        } elseif (is_string($data)) {
-//            $this->writeString($data, $fp);
-//        } else {
-//            $this->writeString('Object could not be converted to a string', $fp);
-//        }
-//
-//        fclose($fp);
+        $fp = fopen($this->filename, 'a');
+        if (is_array($data) || is_object($data)) {
+            $this->writeArray($data, $fp);
+        } elseif (is_string($data)) {
+            $this->writeString($data, $fp);
+        } else {
+            $this->writeString('Object could not be converted to a string', $fp);
+        }
+
+        fclose($fp);
     }
 
     /**
