@@ -36,6 +36,8 @@ class woocsv_import_product
 
     public $is_product_parent = FALSE;
 
+    public $is_default_variable = FALSE;
+
     /* since 3.0.6
         no more use of the global $woocsv_import
     */
@@ -753,6 +755,11 @@ class woocsv_import_product
         if (!empty ($this->product['is_parent'])) {
             $this->is_product_parent = ($this->product['is_parent'] == "True");
         }
+
+        if (!empty ($this->product['is_default_variable'])) {
+            $this->is_default_variable = ($this->product['is_default_variable'] == "True");
+        }
+
 
         // @ since 3.0.5
         // if the product is new add total_sales to show it in the front end

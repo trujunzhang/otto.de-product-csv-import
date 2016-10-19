@@ -79,6 +79,7 @@ class woocsv_import
         38 => 'attributes',
         39 => 'available_attributes',
         40 => 'is_parent',
+        41 => 'is_default_variable',
     );
 
 
