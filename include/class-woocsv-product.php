@@ -38,6 +38,9 @@ class woocsv_import_product
 
     public $is_default_variable = FALSE;
 
+    public $is_single = FALSE;
+
+
     /* since 3.0.6
         no more use of the global $woocsv_import
     */
@@ -71,6 +74,7 @@ class woocsv_import_product
         'attributes' => array(),
         'available_attributes' => array(),
         'default_variable' => '',
+        'is_single' => false,
     );
 
     public $meta = array(
@@ -774,6 +778,10 @@ class woocsv_import_product
 
         if (!empty ($this->product['default_variable'])) {
             $this->is_default_variable = filter_var($this->product['default_variable'], FILTER_VALIDATE_BOOLEAN);
+        }
+
+        if (!empty ($this->product['is_single'])) {
+            $this->is_single = filter_var($this->product['is_single'], FILTER_VALIDATE_BOOLEAN);
         }
 
 
