@@ -332,7 +332,7 @@ class woocsv_import_product
         do_action('woocsv_product_before_images_save');
 
         if (!empty($this->featured_image)) {
-//            $this->save_featured_image();
+            $this->save_featured_image();
         } else {
             $this->logger->log(__('No featured image available ', 'woocommerce-csvimport'));
         }
