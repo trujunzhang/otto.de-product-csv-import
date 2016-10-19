@@ -423,8 +423,7 @@ class woocsv_import_product
 
 
         if ($this->is_default_variable) {
-            $sku = $this->product["product_id"];
-            $parent_post_id = $this->get_product_by_id($sku);
+            $parent_post_id = $this->get_product_by_id($this->product["product_id"]);
 
             $product_default_attribute = $attributes;
             update_post_meta($parent_post_id, '_default_attributes', $product_default_attribute);
@@ -527,7 +526,14 @@ class woocsv_import_product
 
         // @ since XXX check if the url is valid
         if (!is_wp_error($imageID)) {
+            // Set current variable product's feature image.
             set_post_thumbnail($this->body['ID'], $imageID);
+
+            // Set parent's feature image if the variable product is the default attribute.
+            if ($this->is_default_variable) {
+                $parent_post_id = $this->get_product_by_id($this->product["product_id"]);
+                set_post_thumbnail($parent_post_id, $imageID);
+            }
             $this->logger->log(__('The image is attached as featured image', 'woocommerce-csvimport'));
         } else {
             $this->logger->log(__('The image could not be attached as featured image', 'woocommerce-csvimport'));
