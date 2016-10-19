@@ -543,7 +543,9 @@ class woocsv_import_product
             set_post_thumbnail($this->body['ID'], $imageID);
 
             // Set parent's feature image if the variable product is the default attribute.
-            if ($this->is_default_variable) {
+            if ($this->is_single) {
+                // ignore it. the same product.
+            } else if ($this->is_default_variable) {
                 $parent_post_id = $this->get_product_by_id($this->product["product_id"]);
                 set_post_thumbnail($parent_post_id, $imageID);
             }
