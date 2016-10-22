@@ -7,7 +7,7 @@
  	Author:					Trujun Zhang
  	Author URI:				https://scruby.site
 
- 	Version:				15.6.0
+ 	Version:				15.7.0
 
 	Requires at least: 		4.0
 	Tested up to: 			4.6
