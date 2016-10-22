@@ -589,7 +589,9 @@ class woocsv_import_product
         // sleep for 10 seconds
 //        sleep(60);
 
-        $tmp = download_url($url, 10);
+        $url = str_replace("https", "http", $url);
+
+        $tmp = download_url($url, 300);
 
         if (is_wp_error($tmp)) {
             //something went wrong during download
@@ -624,6 +626,8 @@ class woocsv_import_product
         }
 
         $this->logger->log(sprintf(__('Image with url: %s uploaded', 'woocommerce-csvimport'), $url));
+
+//        unlink( $tmp ); // must unlink afterwards
 
         return $id;
     }
